@@ -1,39 +1,29 @@
 name: Daily Rain Checker
 
 on:
+  workflow_dispatch:
   schedule:
-    # 每天台灣時間早上 7:00 執行 (UTC 23:00)
     - cron: '0 23 * * *'
-  workflow_dispatch: # 允許在 GitHub 頁面上手動觸發測試
-
-name: Rain Checker
-
-on:
-  workflow_dispatch: # 加上這行才能手動按鈕執行
-  schedule:
-    - cron: '0 0 * * *' # 你原本設定的自動執行時間
 
 jobs:
   check-rain:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 檢出專案程式碼
+      - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: 設定 Python 環境
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: 安裝依賴套件
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install requests
 
-      - name: 執行降雨偵測腳本
+      - name: Run rain checker script
         env:
-          # 安全引用 GitHub Secrets
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python main.py
+        run: python rain_checker.py
