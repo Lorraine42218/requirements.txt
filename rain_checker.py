@@ -42,13 +42,13 @@ def main():
     pop = get_max_pop()
     print(f"今日最高降雨機率為: {pop}%")
     
-    # 判斷降雨機率是否超過 60%
     if pop > 60:
-        message = f"🌧️ 今天最高降雨機率達 {pop}%，超過 60%，記得帶傘喔！"
-        send_telegram_message(message)
-        print("已發送 Telegram 通知！")
+        message = f"🌧️ 今天桃園最高降雨機率達 {pop}%，超過 60%，記得帶傘喔！"
     else:
-        print("降雨機率未超過 60%，不發送通知。")
+        message = f"☀️ 今天桃園最高降雨機率為 {pop}%，未超過 60%，出門不用帶傘！"
+    
+    send_telegram_message(message)
+    print("已成功發送 Telegram 通知！")
 
 if __name__ == "__main__":
     main()
