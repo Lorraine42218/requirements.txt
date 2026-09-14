@@ -6,6 +6,13 @@ on:
     - cron: '0 23 * * *'
   workflow_dispatch: # 允許在 GitHub 頁面上手動觸發測試
 
+name: Rain Checker
+
+on:
+  workflow_dispatch: # 加上這行才能手動按鈕執行
+  schedule:
+    - cron: '0 0 * * *' # 你原本設定的自動執行時間
+
 jobs:
   check-rain:
     runs-on: ubuntu-latest
